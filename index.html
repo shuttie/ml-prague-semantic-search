@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>Practical fine-tuning for semantic search</title>
+
+	<link rel="stylesheet" href="dist/reset.css">
+	<link rel="stylesheet" href="dist/reveal.css">
+	<link rel="stylesheet" href="dist/theme/dracula.css">
+
+	<!-- Theme used for syntax highlighted code -->
+	<link rel="stylesheet" href="plugin/highlight/monokai.css">
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section>
+				<h2>Practical LLM fine-tuning</h2>
+				<img src="img/cat.png" height="350px" style="margin: 0px;">
+				<h2>for semantic search</h2>
+				<br>
+				<small>Roman Grebennikov | ML Prague 2024</small>
+			</section>
+			<section>
+				<h2>Agenda</h2>
+				<p>🚀</p>
+				<ul>
+					<li>How does this vector/semantic search work?</li>
+					<li>Relevance, semantics and intent</li>
+					<li>Contrastive learning</li>
+					<li>Negatives: easy and hard</li>
+					<li>Distillation and transfer</li>
+				</ul>
+			</section>
+			<section>
+				<h2>whoami</h2>
+				<p>🔎</p>
+				<ul>
+					<li>PhD in CS, quant trading, credit scoring</li>
+					<li>Findify: e-commerce search, personalization</li>
+					<li>Delivery Hero: food search, LLMs</li>
+				</ul>
+			</section>
+			<section>
+				<h2><strong>Vectors</strong> in vector search</h2>
+				<img src="img/embeddings.png" height="400px">
+				<ul>
+					<li>Embedding: text -> float[] mapping</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Embedding models</h2>
+				<img src="img/mteb.png" height="400px">
+				<ul>
+					<li><strong>MTEB leaderboard</strong>: model eval over 8 tasks</li>
+					<li><strong>MTEB retrieval</strong>: search over BEIR dataset collection</li>
+				</ul>
+			</section>
+			<section>
+				<h2><strong>Search</strong> in vector search</h2>
+				<img src="img/similarity.png" height="400px">
+				<ul>
+					<li>Similar query-document pairs have <strong>high similarity score</strong></li>
+					<li>Similarity score: <strong>cosine</strong> or dot-product</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Exact vs approximate search</h2>
+				<br>
+				<p>What if you have 1M products? 🤔</p>
+				<ul>
+					<li>Exact: cosine between query and 1M products</li>
+					<li>Approx: HNSW, DiskANN - not exact but fast</li>
+				</ul>
+				<br>
+				<p><img src="img/engines.png" height="200px"></p>
+			</section>
+			<section>
+				<h2>Semantics and intent</h2>
+			</section>
+			<section>
+				<h2></h2>
+			</section>
+			<section>
+				<h2></h2>
+			</section>
+			<section>
+				<h2></h2>
+			</section>
+		</div>
+	</div>
+
+	<script src="dist/reveal.js"></script>
+	<script src="plugin/notes/notes.js"></script>
+	<script src="plugin/markdown/markdown.js"></script>
+	<script src="plugin/highlight/highlight.js"></script>
+	<script>
+		// More info about initialization & config:
+		// - https://revealjs.com/initialization/
+		// - https://revealjs.com/config/
+		Reveal.initialize({
+			hash: true,
+			history: true,
+			controls: true,
+			progress: true,
+			width: 1200,
+			transition: 'none',
+			slideNumber: true,
+
+			// Learn about plugins: https://revealjs.com/plugins/
+			plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+		});
+	</script>
+</body>
+
+</html>
