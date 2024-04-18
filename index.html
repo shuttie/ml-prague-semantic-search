@@ -23,18 +23,7 @@
 				<img src="img/cat.png" height="350px" style="margin: 0px;">
 				<h2>for semantic search</h2>
 				<br>
-				<small>Roman Grebennikov | ML Prague 2024</small>
-			</section>
-			<section>
-				<h2>Agenda</h2>
-				<p>🚀</p>
-				<ul>
-					<li class="fragment">How does this vector/semantic search work?</li>
-					<li class="fragment">Relevance, semantics and intent</li>
-					<li class="fragment">Contrastive learning</li>
-					<li class="fragment">Negatives: easy and hard</li>
-					<li class="fragment">Distillation and transfer</li>
-				</ul>
+				<small>Roman Grebennikov | Delivery Hero SE | ML Prague 2024</small>
 			</section>
 			<section>
 				<h2>whoami</h2>
@@ -43,6 +32,45 @@
 					<li>PhD in CS, quant trading, credit scoring</li>
 					<li>Findify: e-commerce search, personalization</li>
 					<li>Delivery Hero: food search, LLMs</li>
+					<li>Opensource: Metarank, Nixiesearch</li>
+				</ul>
+				<p>
+					<img src="img/dj.jpeg" height="200px">
+					<img src="img/foodora.webp" height="200px">
+				</p>
+			</section>
+			<section>
+				<h2>Nixiesearch</h2>
+				<p><img src="img/nixiesearch.png" height="300px"></p>
+				<ul>
+					<li>Open-source hybrid search engine</li>
+					<li>S3/blockstore based storage</li>
+					<li class="fragment highlight-green">Can fine-tune to your data</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Agenda</h2>
+				<p>🚀</p>
+				<ul>
+					<li class="fragment">How does this vector/semantic search work?</li>
+					<li class="fragment">Relevance, semantics and intent</li>
+					<li class="fragment">Contrastive learning</li>
+					<li class="fragment">Does this work in practice?</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Lexical search</h2>
+				<p><img src="img/lexical.png" height="400px"></p>
+				<ul>
+					<li><strong>Pros</strong>: fast, many implementations</li>
+					<li><strong>Cons</strong>: lacks query understanding</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Lexical: sparse retrieval</h2>
+				<p><img src="img/lexical-sparse.png" height="400px"></p>
+				<ul>
+					<li>Bag-of-words sparse vectors: high dimentionality</li>
 				</ul>
 			</section>
 			<section>
@@ -140,7 +168,7 @@
 				</ul>
 			</section>
 			<section>
-				<h2>Training</h2>
+				<h2>Training: SBERT</h2>
 				<img src="img/sbert.png" height="500px">
 			</section>
 			<section>
@@ -150,6 +178,44 @@
 			<section>
 				<h2>Data preparation</h2>
 				<img src="img/dataprep.png" height="500px">
+			</section>
+			<section>
+				<h2>Nixietune</h2>
+				<ul>
+					<li>Front-end for SBERT and HF Trainer</li>
+					<li>Stable JSON data format</li>
+				</ul>
+				<pre><code>
+{
+    "seq_len": 128,
+    "target": "triplet",
+    "train_dataset": "nixiesearch/amazon-esci",
+    "eval_dataset": "nixiesearch/amazon-esci",
+    "model_name_or_path": "intfloat/e5-base-v2",
+    "per_device_train_batch_size": 512,
+    "per_device_eval_batch_size": 512,
+    "eval_metrics": ["ndcg@3", "ndcg@5", "ndcg@10"],
+    "query_prefix": "query: ",
+    "document_prefix": "passage: "
+}
+				</code></pre>
+			</section>
+			<section>
+				<h2>Nixietune data format</h2>
+				<p>query + positive + negatives (0+)</p>
+				<pre><code>
+{
+    "query": "tomato",
+    "doc": "Tomato Round Local 1kg",
+    "neg": [
+        "Heinz- Tomato Ketchup | 600 ml",
+        "Jacker Tomato Flavour Potato Crisps | 100g",
+        "Red Potato | 500 g",
+        "Kochur Mukhi | 500 g",
+        "Ahmed Tomato Sauce 340 g - 5000000162"
+    ]
+}
+				</code></pre>
 			</section>
 			<section>
 				<h2>Example code</h2>
@@ -217,6 +283,42 @@
 				<img src="img/cosine.png" height="300px">
 			</section>
 			<section>
+				<h2>Target: cosine</h2>
+				<p>Nixietune: set target</p>
+				<pre><code data-trim data-noescape data-line-numbers="3">
+{
+    "seq_len": 128,
+    "target": "cosine",
+    "train_dataset": "nixiesearch/amazon-esci",
+    "eval_dataset": "nixiesearch/amazon-esci",
+    "model_name_or_path": "intfloat/e5-base-v2",
+    "per_device_train_batch_size": 512,
+    "per_device_eval_batch_size": 512,
+    "eval_metrics": ["ndcg@3", "ndcg@5", "ndcg@10"],
+    "query_prefix": "query: ",
+    "document_prefix": "passage: "
+}
+				</code></pre>
+			</section>
+			<section>
+				<h2>Passing scores</h2>
+				<pre><code data-trim data-noescape data-line-numbers="4,12">
+{
+    "query": "tomato",
+    "doc": "Tomato Round Local 1kg",
+    "score": 1.0,
+    "neg": [
+        "Heinz- Tomato Ketchup | 600 ml",
+        "Jacker Tomato Flavour Potato Crisps | 100g",
+        "Red Potato | 500 g",
+        "Kochur Mukhi | 500 g",
+        "Ahmed Tomato Sauce 340 g - 5000000162"
+    ],
+    "negscore": [0.6, 0.4, 0.2, 0.1, 0.0]
+}
+				</code></pre>
+			</section>
+			<section>
 				<h2>CosineSimilarityLoss</h2>
 				<p>But what is label value?</p>
 				<p><img src="img/cos90.png" height="400px" style="margin: 0px;"></p>
@@ -276,8 +378,11 @@
 			</section>
 			<section>
 				<h2>Batch size</h2>
-				<p>todo: expetiment cosine+batch</p>
-				<ul>Larger batch size = better the NDCG 🤔</ul>
+				<p><img src="img/batch.png" size="300px"></p>
+				<ul>
+					<li>🤔 Larger batch size = better the NDCG </li>
+					<li>😢 At 1024 we maxed out VRAM </li>
+				</ul>
 			</section>
 			<section>
 				<h2>Let's help Dora find a better way</h2>
@@ -303,10 +408,60 @@
 				</ul>
 			</section>
 			<section>
+				<h2>Target: infonce</h2>
+				<p>Nixietune: set target</p>
+				<pre><code data-trim data-noescape data-line-numbers="3-4">
+{
+    "seq_len": 128,
+    "target": "infonce",
+    "num_negatives": 1,
+    "train_dataset": "nixiesearch/amazon-esci",
+    "eval_dataset": "nixiesearch/amazon-esci",
+    "model_name_or_path": "intfloat/e5-base-v2",
+    "per_device_train_batch_size": 512,
+    "per_device_eval_batch_size": 512,
+    "eval_metrics": ["ndcg@3", "ndcg@5", "ndcg@10"],
+    "query_prefix": "query: ",
+    "document_prefix": "passage: "
+}
+				</code></pre>
+			</section>
+			<section>
 				<h2>InfoNCE vs others</h2>
-				<p><img src="img/infonce.png" height="250px"></p>
+				<p><img src="img/losses.png" height="250px"></p>
 				<p>Majority of MTEB leaderboard are trained with InfoNCE loss</p>
 				<ul><strong>Learning #4</strong>: more data = better</ul>
+			</section>
+			<section>
+				<h2>Does this work in practice?</h2>
+			</section>
+			<section>
+				<h2>Case: food search</h2>
+				<p>Sneak peek into the latest A/B test:</p>
+				<ul>
+					<li>Average click position: <span style="color: green;">-3%</span></li>
+					<li>Searches per user: <span style="color: green;">-2%</span></li>
+					<li>Clicks per search: <span style="color: green;">+3%</span></li>
+				</ul>
+				<p><img src="img/ab.png" height="150px"></p>
+				<p><small>Disclaimer: 95% CI, only 2+ token queries</small></p>
+			</section>
+			<section>
+				<h2>Case: electronic parts</h2>
+				<p>Tough case: huge vocab mismatch</p>
+				<p><img src="img/canals.png" height="200px"></p>
+				<p><img src="img/canals-ft.png" height="200px"></p>
+			</section>
+			<section>
+				<h2>Final words</h2>
+				<p><img src="img/doge.png" height="300px"></p>
+				<ul>
+					<li>Fine-tuning is easy with SBERT/nixietune</li>
+					<li>FT gains >> swapping models</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Questions?</h2>
 			</section>
 		</div>
 	</div>
