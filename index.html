@@ -168,6 +168,34 @@
 				</ul>
 			</section>
 			<section>
+				<h2>What is positive and negative?</h2>
+				<p><img src="img/cvr-noise.png" height="400px"></p>
+				<ul>
+					<li>1 click, 3 impressions = 33% CTR?</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Mixing clicks and confidence</h2>
+				<p><img src="img/bayes-cvr.png"></p>
+				<ul>
+					<li><strong>Bayes correction</strong>: mix prior and posterior</li>
+					<li><strong>Low confidence</strong>: strong shift to avg</li>
+					<li><strong>High confidence</strong>: almost no shift to avg</li>
+				</ul>
+				<p><small>[1]: Haystack US22: R.Kriegler, <a
+							href="https://www.youtube.com/watch?v=wa88XShl7hs">Modelling implicit user feedback for
+							optimising
+							e-commerce search</a></small></p>
+			</section>
+			<section>
+				<h2>Bayes corrected CVR as label</h2>
+				<p><img src="img/cvr-noise-bayes.png" height="500px"></p>
+			</section>
+			<section>
+				<h2>Bayes corrected CVR as label</h2>
+				<p><img src="img/cvr-noise-bayes2.png" height="500px"></p>
+			</section>
+			<section>
 				<h2>Training: SBERT</h2>
 				<img src="img/sbert.png" height="500px">
 			</section>
@@ -349,14 +377,6 @@
 				</ul>
 			</section>
 			<section>
-				<h2>Negative labels</h2>
-				<ul>
-					<li>True negative / true positive = ok</li>
-					<li>False negative / false positive = not ok</li>
-				</ul>
-				<p><img src="img/cos-temp-mislabel.png" height="400px"></p>
-			</section>
-			<section>
 				<h2>Contrastive and Triplet losses</h2>
 				<ul>
 					<li><strong>Contrastive</strong>: query-document-label, binary label</li>
@@ -449,8 +469,9 @@
 			<section>
 				<h2>Case: electronic parts</h2>
 				<p>Tough case: huge vocab mismatch</p>
-				<p><img src="img/canals.png" height="200px"></p>
-				<p><img src="img/canals-ft.png" height="200px"></p>
+				<p><img src="img/canals.png" height="200px" style="margin: 0px;"></p>
+				<p><img src="img/canals-ft.png" height="200px" style="margin: 0px;"></p>
+				<p>TLDR: NDCG@10 jump from 0.13 to 0.58</p>
 			</section>
 			<section>
 				<h2>Final words</h2>
@@ -458,6 +479,19 @@
 				<ul>
 					<li>Fine-tuning is easy with SBERT/nixietune</li>
 					<li>FT gains >> swapping models</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Links</h2>
+				<ul>
+					<li><strong>Nixiesearch</strong>: <a
+							href="https://github.com/nixiesearch/nixiesearch">github.com/nixiesearch/nixiesearch</a>
+					</li>
+					<li><strong>Nixietune</strong>: <a
+							href="https://github.com/nixiesearch/nixietune">github.com/nixiesearch/nixietune</a></li>
+					<li><strong>Linkedin</strong>: <a
+							href="https://www.linkedin.com/in/romangrebennikov/">linkedin.com/in/romangrebennikov/</a>
+					</li>
 				</ul>
 			</section>
 			<section>
